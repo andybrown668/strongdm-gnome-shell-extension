@@ -2,6 +2,7 @@
   "name": "StrongDM",
   "description": "Access StrongDM resources",
   "uuid": "strongdm-gnome-shell-extension.andybrown668.github.com",
+  "url": "https://github.com/andybrown668/strongdm-gnome-shell-extension.git",
   "shell-version": [
     "40"
   ]
