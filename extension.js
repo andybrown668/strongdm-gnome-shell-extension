@@ -37,8 +37,8 @@ const Me = imports.misc.extensionUtils.getCurrentExtension();
 const Gio = imports.gi.Gio;
 const Mainloop = imports.mainloop;
 
-const Indicator = GObject.registerClass(
-    class Indicator extends PanelMenu.Button {
+const SDMIndicator = GObject.registerClass(
+    class SDMIndicator extends PanelMenu.Button {
         _init() {
             super._init(0.0, _('StrongDM extension'));
             this.add_child(new St.Icon({
@@ -197,7 +197,7 @@ const Indicator = GObject.registerClass(
                     switch (section.type) {
                         case "url":
                             m = new PopupMenu.PopupMenuItem(entry.name);
-                            m.connect('activate', (entry) => {
+                            m.connect('activate', () => {
                                 GLib.spawn_command_line_sync("gio open http" + entry.url);
                             });
                             break;
@@ -229,7 +229,7 @@ class Extension {
     }
 
     enable() {
-        this._indicator = new Indicator();
+        this._indicator = new SDMIndicator();
         Main.panel.addToStatusArea(this._uuid, this._indicator);
     }
 
