@@ -1,0 +1,8 @@
+{
+  "name": "StrongDM",
+  "description": "Access StrongDM resources",
+  "uuid": "strongdm-gnome-shell-extension.andybrown668.github.com",
+  "shell-version": [
+    "40"
+  ]
+}
