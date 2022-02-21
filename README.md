@@ -14,6 +14,8 @@ Limitations:
 Future:
 * use ```sdm status``` Tags to layout the menu structure
 * convince StrongDM to add an option - ```sdm status --json --watch``` - to return a json stream of status
+* get a fancy panel icon from StrongDM
+
 
 https://extensions.gnome.org/extension/4836/strongdm/
 
