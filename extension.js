@@ -47,7 +47,7 @@ const SDMIndicator = GObject.registerClass(
             }));
             this._status = "";
             this._refresh();
-            this._sourceId = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 5, this._refresh.bind(this));
+            this._sourceId = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, 60, this._refresh.bind(this));
         }
 
         destroy() {
@@ -139,6 +139,10 @@ const SDMIndicator = GObject.registerClass(
             });
         }
 
+        _sdmSSH(resource) {
+            GLib.spawn_command_line_sync("gnome-terminal -- sdm ssh " + resource);
+        }
+
         _createMenu() {
             let pop = this.menu;
             this.menu.removeAll();
@@ -155,7 +159,8 @@ const SDMIndicator = GObject.registerClass(
             if (active > 0) {
                 let disconnectAll = new PopupMenu.PopupImageMenuItem("Disconnect All (" + active + " connected)", 'action-unavailable-symbolic');
                 disconnectAll.connect('activate', () => {
-                    this._sdm("disconnect --all");
+                    disconnectAll.label.text = "Disconnecting all resources...";
+                    this._sdm("disconnect --all", (stdout) => this._refresh);
                 });
                 this.menu.addMenuItem(disconnectAll);
             }
@@ -171,7 +176,7 @@ const SDMIndicator = GObject.registerClass(
                     }
                     let m = new PopupMenu.PopupImageMenuItem(entry.name, 'utilities-terminal-symbolic');
                     m.connect('activate', () => {
-                        GLib.spawn_command_line_sync("gnome-terminal -- sdm ssh " + entry.name);
+                        this._sdmSSH(entry.name);
                     });
                     this.menu.addMenuItem(m);
                 }
@@ -198,7 +203,7 @@ const SDMIndicator = GObject.registerClass(
                         case "url":
                             m = new PopupMenu.PopupMenuItem(entry.name);
                             m.connect('activate', () => {
-                                GLib.spawn_command_line_sync("gio open http" + entry.url);
+                                Gio.AppInfo.launch_default_for_uri("http" + entry.url, null);
                             });
                             break;
                         case "server":
@@ -206,10 +211,11 @@ const SDMIndicator = GObject.registerClass(
                             m = new PopupMenu.PopupSwitchMenuItem(entry.name, entry.active);
                             m.connect('toggled', (object, value) => {
                                 if (value) {
-                                    GLib.spawn_command_line_sync("gnome-terminal -- sdm ssh " + entry.name);
+                                    this._sdmSSH(entry.name);
                                 } else {
                                     this._sdm("disconnect " + entry.name);
                                 }
+                                this._refresh();
                             });
                             break;
                     }
