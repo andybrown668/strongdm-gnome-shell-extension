@@ -17,6 +17,6 @@ Future:
 * get a fancy panel icon from StrongDM
 
 
-https://extensions.gnome.org/extension/4836/strongdm/
+https://extensions.gnome.org/extension/4841/strongdm/
 
 StrongDM - https://www.strongdm.com
