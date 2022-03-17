@@ -94,6 +94,9 @@ const SDMIndicator = GObject.registerClass(
                     isWebsite = true;
                     continue;
                 }
+                if (section == undefined) {
+                    continue;
+                }
                 // split the line to get connected status for datasources and servers, and url for web sites
                 var entry;
                 if (isWebsite) {
