@@ -4,7 +4,8 @@
   "uuid": "strongdm@andybrown668.github.com",
   "url": "https://github.com/andybrown668/strongdm-gnome-shell-extension.git",
   "shell-version": [
-    "40"
+    "40",
+    "42"
   ],
   "version": 2
 }
